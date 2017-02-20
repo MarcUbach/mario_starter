@@ -73,18 +73,27 @@ public class Enemy : MonoBehaviour {
 			direction = -direction;
 		} else if (hit.collider.gameObject.CompareTag ("Player")) {
 			// we've hit the player
-
+            
 			// get player script component
 			Player playerComponent = playerGameObject.GetComponent<Player> ();
 
-			// remove a life from the player
-			playerComponent.Lives = playerComponent.Lives - 1;
+            GameObject PlayerCharacter = GameObject.Find("Player");
 
-			// reset the player
-			playerComponent.Reset();
+            if (PlayerCharacter.transform.position.y > this.transform.position.y + 1.9) // If player is above the enemy it will be squished
+            {
+                Object.Destroy(this.gameObject);
+            }
+            else // Otherwise player should die
+            {
+                // remove a life from the player
+                playerComponent.Lives = playerComponent.Lives - 1;
 
-			// reset the enemy
-			Reset();
+                // reset the player
+                playerComponent.Reset();
+
+                // reset the enemy
+                Reset();
+            }
 		}
 	}
 }
