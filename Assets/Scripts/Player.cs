@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
+	private int jumps;
 
 	public int Lives = 3; // number of lives the player hs
 
@@ -41,10 +42,13 @@ public class Player : MonoBehaviour {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
+			jumps = 0;
 
-			// check to see if the player should jump
-			if (Input.GetButton("Jump"))
-				moveDirection.y = jumpSpeed;
+		}
+		// check to see if the player should jump
+		if (Input.GetButtonDown("Jump") && jumps < 2){
+			moveDirection.y = jumpSpeed;
+			jumps ++;
 		}
 
 		// apply gravity to movement direction
